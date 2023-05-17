@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
 import ContactList from 'components/ContactList/ContactList';
@@ -16,13 +16,12 @@ export function App() {
   const [contacts, setContacts] = useState(initialContacts);
   const [filter, setFilter] = useState('');
 
-  const onSubmit = data =>
-    setContacts(prevState => {
-      if (prevState.find(({ name }) => name === data.name)) {
-        return alert(`${data.name} is already in contacts`);
-      }
-      return [data, ...prevState];
-    });
+  const onSubmit = data => {
+    if (contacts.find(({ name }) => name === data.name)) {
+      return alert(`${data.name} is already in contacts`);
+    }
+    setContacts([data, ...contacts]);
+  };
 
   useEffect(() => {
     const data = localStorage.getItem('contacts');
